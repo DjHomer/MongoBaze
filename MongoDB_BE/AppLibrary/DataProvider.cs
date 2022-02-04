@@ -11,6 +11,7 @@ namespace AppLibrary
 {
    public class DataProvider
     {
+        #region BusPreduzece
         public static void KreirajBusPreduzece(BusPreduzece buspreduzece)
         {
             IMongoDatabase db = Session.MongoDatabase;
@@ -115,6 +116,160 @@ namespace AppLibrary
                 busPreduzeceCollection.DeleteOne(a => a.Id == new ObjectId(id));
             }
         }
+        #endregion
+
+        #region Komentar
+        public static void KreirajKomentar(string id, Komentar komentar)
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+            var collection = db.GetCollection<Komentar>("komentari");
+            komentar.BusPreduzece = new ObjectId(id);
+            collection.InsertOne(komentar);
+        }
+
+        public static Komentar VratiKomentar(string id)
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+            Komentar komentar = db.GetCollection<Komentar>("komentari").Find(x => x.Id == new ObjectId(id)).FirstOrDefault();
+
+            return komentar;
+        }
+
+        public static List<Komentar> VratiSveKomentare()
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+            var collection = db.GetCollection<Komentar>("komentari");
+
+            List<Komentar> komentari = new List<Komentar>();
+
+            foreach (Komentar komentar in collection.Find(x => true).ToList())
+            {
+                komentari.Add(komentar);
+            }
+
+            return komentari;
+        }
+
+        public static List<Komentar> VratiKomentareZaBusPreduzece(string id)
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+            var collection = db.GetCollection<Komentar>("komentari");
+
+            List<Komentar> komentari = new List<Komentar>();
+
+            foreach (Komentar komentar in collection.Find(x => x.BusPreduzece == new ObjectId(id)).ToList())
+            {
+                komentari.Add(komentar);
+            }
+
+            return komentari;
+        }
+
+        public static void AzurirajKomentar(string komentarId, String text)
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+            var filter = Builders<Komentar>.Filter.Eq(x => x.Id, new ObjectId(komentarId));
+            var update = Builders<Komentar>.Update.Set(x => x.Tekst, text);
+
+
+            db.GetCollection<Komentar>("komentari").UpdateOne(filter, update);
+        }
+
+        public static void ObrisiKomentar(String komentarId)
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+            db.GetCollection<Komentar>("komentari").DeleteOne(x => x.Id == new ObjectId(komentarId));
+        }
+
+
+        #endregion
+
+        #region Usluga
+
+        public static void KreirajUslugu(Usluga u)
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+            var collection = db.GetCollection<Usluga>("usluge");
+            collection.InsertOne(u);
+        }
+
+        public static void KreirajKolekcijuUsluga()
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+            var collection = db.GetCollection<Usluga>("usluge");
+        }
+
+        public static Usluga VratiUslugu(string id)
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+            return db.GetCollection<Usluga>("usluge").Find(x => x.Id == new ObjectId(id)).FirstOrDefault();
+        }
+
+
+        public static IList<Usluga> VratiUsluge()
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+            return db.GetCollection<Usluga>("usluge").Find(x => true).ToList<Usluga>();
+        }
+        public static void ObrisiUslugu(ObjectId uslugaId)
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+            db.GetCollection<Usluga>("usluge").DeleteOne(x => x.Id == uslugaId);
+        }
+        public static void AzurirajCenuUsluge(ObjectId idUsluge, float novaCena)
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+            var filter = Builders<Usluga>.Filter.Eq(x => x.Id, idUsluge);
+            var update = Builders<Usluga>.Update.Set(x => x.Cena, novaCena);
+
+            db.GetCollection<Usluga>("usluge").UpdateOne(filter, update);
+        }
+
+        #endregion
+
+        #region Prtljag
+        public static void KreirajPrtljag(Prtljag prtljag)
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+            var collection = db.GetCollection<Prtljag>("prtljag");
+            collection.InsertOne(prtljag);
+        }
+        public static void KreirajKolekcijuPrtljaga()
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+            var collection = db.GetCollection<Prtljag>("prtljag");
+        }
+
+        public static List<Prtljag> VratiSavPrtljag()
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+            var collection = db.GetCollection<Prtljag>("prtljag");
+
+            List<Prtljag> prtljag = new List<Prtljag>();
+
+            foreach (Prtljag p in collection.Find(x => true).ToList())
+            {
+                prtljag.Add(p);
+            }
+
+            return prtljag;
+        }
+
+        public static void AzurirajKolicinuPrtljaga(ObjectId idPr, int novaKol)
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+            var filter = Builders<Prtljag>.Filter.Eq(x => x.Id, idPr);
+            var update = Builders<Prtljag>.Update.Set(x => x.Kolicina, novaKol);
+
+            db.GetCollection<Prtljag>("prtljag").UpdateOne(filter, update);
+        }
+
+        public static void ObrisiPrtljag(ObjectId prtljagId)
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+            db.GetCollection<Prtljag>("prtljag").DeleteOne(x => x.Id == prtljagId);
+        }
+        #endregion
 
     }
 }
