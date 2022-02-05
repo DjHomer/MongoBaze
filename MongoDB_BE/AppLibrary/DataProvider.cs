@@ -271,5 +271,131 @@ namespace AppLibrary
         }
         #endregion
 
+        #region Putnik
+        public static void KreirajKolekcijuPutnika()
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+            var collection = db.GetCollection<Putnik>("putnici");
+        }
+
+        public static List<PutnikDTO> VratiSvePutnike()
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+            var collection = db.GetCollection<Putnik>("putnici");
+            var rezervacijeCollection = db.GetCollection<Rezervacija>("rezervacije");
+
+            List<PutnikDTO> putnici = new List<PutnikDTO>();
+
+            foreach (Putnik putnik in collection.Find(x => true).ToList())
+            {
+                List<Rezervacija> rezervacije = new List<Rezervacija>();
+                if (putnik.Rezervacije != null)
+                {
+                    foreach (ObjectId rezId in putnik.Rezervacije)
+                    {
+                        rezervacije.Add(rezervacijeCollection.Find(x => x.Id == rezId).First());
+                    }
+                }
+                PutnikDTO newPutnik = new PutnikDTO
+                {
+                    Id = putnik.Id,
+                    Jmbg = putnik.Jmbg,
+                    Ime = putnik.Ime,
+                    Prezime = putnik.Prezime,
+                    Email = putnik.Email,
+                    Broj_Telefona = putnik.Broj_Telefona,
+                    Rezervacije = rezervacije
+                };
+                putnici.Add(newPutnik);
+            }
+            return putnici;
+        }
+
+
+
+        public static List<Putnik> VratiPutnikeZaVoznju(String sifra)
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+            var kolekcija = db.GetCollection<Putnik>("putnici");
+            var kolekcijaRezervacije = db.GetCollection<Rezervacija>("rezervacije");
+
+
+            List<Putnik> putnici = new List<Putnik>();
+            Rezervacija rezervacija = kolekcijaRezervacije.Find(x => x.Sifra_Rezervacije == sifra).First();
+            foreach (Putnik p in kolekcija.Find(x => x.Rezervacije.Contains(rezervacija.Id)).ToList())
+            {
+                putnici.Add(p);
+            }
+            return putnici;
+        }
+
+        public static ObjectId KreirajPutnika(Putnik putnik)
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+            var collection = db.GetCollection<Putnik>("putnici");
+            collection.InsertOne(putnik);
+            return putnik.Id;
+        }
+
+        public static void DodajRezervacijuPutniku(String sifra, String jmbg)
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+            var putniciColleciton = db.GetCollection<Putnik>("putnici");
+            var rezervacijaCollection = db.GetCollection<Rezervacija>("rezervacije");
+
+            List<ObjectId> rezervacije = new List<ObjectId>();
+            ObjectId putnikId = new ObjectId();
+            foreach (Putnik p in putniciColleciton.Find(x => x.Jmbg == jmbg).ToList())
+            {
+                putnikId = p.Id;
+                rezervacije = p.Rezervacije;
+                if (rezervacije == null)
+                {
+                    rezervacije = new List<ObjectId>();
+                }
+            }
+            Rezervacija rezervacija = rezervacijaCollection.Find(x => x.Sifra_Rezervacije == sifra).First();
+            rezervacije.Add(rezervacija.Id);
+
+            var filter = Builders<Putnik>.Filter.Eq(x => x.Jmbg, jmbg);
+            var update = Builders<Putnik>.Update.Set(x => x.Rezervacije, rezervacije);
+
+            db.GetCollection<Putnik>("putnici").UpdateOne(filter, update);
+
+            var filter1 = Builders<Rezervacija>.Filter.Eq(x => x.Sifra_Rezervacije, sifra);
+            var update1 = Builders<Rezervacija>.Update.Set(x => x.Putnik, putnikId);
+            db.GetCollection<Rezervacija>("rezervacije").UpdateOne(filter1, update1);
+        }
+
+        public static void AzurirajPutnika(string id, PutnikDTOUpdate putnikDTOUpdate)
+        {
+
+
+            IMongoDatabase db = Session.MongoDatabase;
+
+            IMongoCollection<Putnik> putnikCollection = db.GetCollection<Putnik>("putnici");
+
+            Putnik putnik = putnikCollection.Find(p => p.Id == new ObjectId(id)).FirstOrDefault();
+
+
+            if (putnik != null)
+            {
+                putnik.Ime = putnikDTOUpdate.Ime;
+                putnik.Prezime = putnikDTOUpdate.Prezime;
+                putnik.Email = putnikDTOUpdate.Email;
+                putnik.Broj_Telefona = putnikDTOUpdate.Broj_Telefona;
+
+                putnikCollection.ReplaceOne(x => x.Id == new ObjectId(id), putnik);
+            }
+        }
+
+        public static void ObrisiPutnika(String jmbg)
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+            db.GetCollection<Putnik>("putnici").DeleteOne(x => x.Jmbg == jmbg);
+        }
+        #endregion
+
+
     }
 }
