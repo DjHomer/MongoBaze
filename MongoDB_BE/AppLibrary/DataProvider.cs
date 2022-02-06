@@ -138,6 +138,90 @@ namespace AppLibrary
         }
         #endregion
 
+        #region Rezervacija
+
+        public static void KreirajRezervacije()
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+            var collection = db.GetCollection<Rezervacija>("rezervacije");
+        }
+
+        public static void DodajUsluge(string id, string[] rezervacije)
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+            var collection = db.GetCollection<Rezervacija>("rezervacije");
+
+            IList<ObjectId> retList = new List<ObjectId>();
+            foreach (String s in rezervacije)
+            {
+                retList.Add(new ObjectId(s));
+            }
+
+            var filter = Builders<Rezervacija>.Filter.Eq(x => x.Id, new ObjectId(id));
+            var update = Builders<Rezervacija>.Update.Set(x => x.Niz_Usluga, retList);
+            collection.UpdateOne(filter, update);
+        }
+
+        public static ObjectId KreirajRezervaciju(Rezervacija rez)
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+            var collection = db.GetCollection<Rezervacija>("rezervacije");
+            collection.InsertOne(rez);
+
+            return rez.Id;
+        }
+
+        public static Rezervacija VratiRezervaciju(string sifra)
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+            return db.GetCollection<Rezervacija>("rezervacije").Find(x => x.Sifra_Rezervacije == sifra).FirstOrDefault();
+        }
+
+        public static RezervacijaDTO VratiRezervacijuId(string id)
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+            Rezervacija rez = db.GetCollection<Rezervacija>("rezervacije").Find(x => x.Id == new ObjectId(id)).FirstOrDefault();
+
+            IList<string> niz_usluga = new List<string>();
+            foreach (ObjectId idProz in rez.Niz_Usluga)
+            {
+                niz_usluga.Add(DataProvider.VratiUslugu(idProz.ToString()).Naziv);
+            }
+
+            RezervacijaDTO rezDTO = new RezervacijaDTO()
+            {
+                Id = rez.Id,
+                Status = rez.Status,
+                Sifra_Rezervacije = rez.Sifra_Rezervacije,
+                Cena = rez.Cena,
+                Usluge = niz_usluga
+            };
+            return rezDTO;
+        }
+
+        public static IList<Rezervacija> VratiRezervacije()
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+            return db.GetCollection<Rezervacija>("rezervacije").Find(x => true).ToList<Rezervacija>();
+        }
+
+        public static void ObrisiRezervaciju(String sifra)
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+            db.GetCollection<Rezervacija>("rezervacije").DeleteOne(x => x.Sifra_Rezervacije == sifra);
+        }
+
+        public static void AzurirajRezervaciju(String sifra, String status)
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+            var filter = Builders<Rezervacija>.Filter.Eq(x => x.Sifra_Rezervacije, sifra);
+            var update = Builders<Rezervacija>.Update.Set(x => x.Status, status);
+            db.GetCollection<Rezervacija>("rezervacije").UpdateOne(filter, update);
+        }
+
+        #endregion
+
+
         #region Voznja
 
         public static void KreirajVoznju(Voznja voznja)
