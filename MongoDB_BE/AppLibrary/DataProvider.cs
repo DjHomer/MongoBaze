@@ -98,6 +98,26 @@ namespace AppLibrary
             }
         }
 
+        public static void DodajBusPreduzecuVoznju(ObjectId voznjaId, ObjectId busPreduzeceId)
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+            IMongoCollection<BusPreduzece> busPreduzeceCollection = db.GetCollection<BusPreduzece>("busPreduzece");
+            BusPreduzece busPreduzece = busPreduzeceCollection.Find(x => x.Id == busPreduzeceId).FirstOrDefault();
+            busPreduzece.Voznje.Add(voznjaId);
+            busPreduzeceCollection.ReplaceOne(x => x.Id == busPreduzeceId, busPreduzece);
+        }
+
+        public static void ObrisiBusPreduzecuVoznju(ObjectId voznjaId, ObjectId busPreduzeceId)
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+            IMongoCollection<BusPreduzece> busPreduzeceCollection = db.GetCollection<BusPreduzece>("busPreduzece");
+            BusPreduzece busPreduzece = busPreduzeceCollection.Find(x => x.Id == busPreduzeceId).FirstOrDefault();
+            busPreduzece.Voznje.Remove(voznjaId);
+            busPreduzeceCollection.ReplaceOne(x => x.Id == busPreduzeceId, busPreduzece);
+        }
+
+
+
         public static void ObrisiBusPreduzece(string id)
         {
             IMongoDatabase db = Session.MongoDatabase;
@@ -110,12 +130,261 @@ namespace AppLibrary
             {
                 foreach (var voznja in busPreduzeceZaBrisanje.Voznje)
                 {
-                  //  DataProvider.ObrisiVoznju(voznja.ToString());
+                    DataProvider.ObrisiVoznju(voznja.ToString());
                 }
 
                 busPreduzeceCollection.DeleteOne(a => a.Id == new ObjectId(id));
             }
         }
+        #endregion
+
+        #region Voznja
+
+        public static void KreirajVoznju(Voznja voznja)
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+            var voznje = db.GetCollection<Voznja>("voznja");
+            voznje.InsertOne(voznja);
+
+            if (voznja.BusPreduzece != ObjectId.Empty)
+            {
+                DodajBusPreduzecuVoznju(voznja.Id, voznja.BusPreduzece);
+            }
+        }
+
+        public static IList<VoznjaDTO> VratiSveVoznje()
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+            IList<Voznja> voznje = db.GetCollection<Voznja>("voznja").Find(x => true).ToList<Voznja>();
+            IList<VoznjaDTO> voznjeDTO = new List<VoznjaDTO>();
+
+            foreach (var v in voznje)
+            {
+                VoznjaDTO pom = new VoznjaDTO();
+                pom.Id = v.Id.ToString();
+                pom.PolazniGrad = v.PolazniGrad;
+                pom.DolazniGrad = v.DolazniGrad;
+                pom.DatumVoznje = v.DatumVoznje;
+                pom.BrojSedista = v.BrojSedista;
+                pom.BrojPreostalihSedista = v.BrojPreostalihSedista;
+                pom.TipVoznje = v.TipVoznje;
+
+                pom.ListaRezervacija = new List<string>();
+                foreach (var rez in v.ListaRezervacija)
+                {
+                    pom.ListaRezervacija.Add(rez.ToString());
+                }
+                //if (l.BusPreduzece.CompareTo(ObjectId.Empty) == 0)
+                //{
+                //    pom.BusPreduzece = "";
+                //}
+               // else
+                //{
+                    BusPreduzece busPreduzece = db.GetCollection<BusPreduzece>("busPreduzece").Find(x => x.Id == v.BusPreduzece).FirstOrDefault();
+                    if (busPreduzece != null)
+                    {
+                        pom.BusPreduzece = busPreduzece.Id.ToString();
+                    }
+                //}
+
+                voznjeDTO.Add(pom);
+            }
+
+            return voznjeDTO;
+        }
+
+
+        public static IList<VoznjaDTO> VratiSveGotoveVoznje()
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+            IList<Voznja> voznje = db.GetCollection<Voznja>("voznja").Find(x => (x.DatumVoznje < DateTime.Now)).ToList<Voznja>();
+            IList<VoznjaDTO> voznjeDTO = new List<VoznjaDTO>();
+
+            foreach (var v in voznje)
+            {
+                VoznjaDTO pom = new VoznjaDTO();
+                pom.Id = v.Id.ToString();
+                pom.PolazniGrad = v.PolazniGrad;
+                pom.DolazniGrad = v.DolazniGrad;
+                pom.DatumVoznje = v.DatumVoznje;
+                pom.BrojSedista = v.BrojSedista;
+                pom.BrojPreostalihSedista = v.BrojPreostalihSedista;
+                pom.TipVoznje = v.TipVoznje;
+
+                pom.ListaRezervacija = new List<string>();
+                foreach (var rez in v.ListaRezervacija)
+                {
+                    pom.ListaRezervacija.Add(rez.ToString());
+                }
+                //if (l.BusPreduzece.CompareTo(ObjectId.Empty) == 0)
+                //{
+                //    pom.BusPreduzece = "";
+                //}
+                // else
+                //{
+                BusPreduzece busPreduzece = db.GetCollection<BusPreduzece>("busPreduzece").Find(x => x.Id == v.BusPreduzece).FirstOrDefault();
+                if (busPreduzece != null)
+                {
+                    pom.BusPreduzece = busPreduzece.Id.ToString();
+                }
+                //}
+
+                voznjeDTO.Add(pom);
+            }
+
+            return voznjeDTO;
+        }
+
+        public static IList<VoznjaDTO> VratiSveAktivneVoznje()
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+            IList<Voznja> voznje = db.GetCollection<Voznja>("voznja").Find(x => (x.DatumVoznje > DateTime.Now)).ToList<Voznja>();
+            IList<VoznjaDTO> voznjeDTO = new List<VoznjaDTO>();
+
+            foreach (var v in voznje)
+            {
+                VoznjaDTO pom = new VoznjaDTO();
+                pom.Id = v.Id.ToString();
+                pom.PolazniGrad = v.PolazniGrad;
+                pom.DolazniGrad = v.DolazniGrad;
+                pom.DatumVoznje = v.DatumVoznje;
+                pom.BrojSedista = v.BrojSedista;
+                pom.BrojPreostalihSedista = v.BrojPreostalihSedista;
+                pom.TipVoznje = v.TipVoznje;
+
+                pom.ListaRezervacija = new List<string>();
+                foreach (var rez in v.ListaRezervacija)
+                {
+                    pom.ListaRezervacija.Add(rez.ToString());
+                }
+                //if (l.BusPreduzece.CompareTo(ObjectId.Empty) == 0)
+                //{
+                //    pom.BusPreduzece = "";
+                //}
+                // else
+                //{
+                BusPreduzece busPreduzece = db.GetCollection<BusPreduzece>("busPreduzece").Find(x => x.Id == v.BusPreduzece).FirstOrDefault();
+                if (busPreduzece != null)
+                {
+                    pom.BusPreduzece = busPreduzece.Id.ToString();
+                }
+                //}
+
+                voznjeDTO.Add(pom);
+            }
+
+            return voznjeDTO;
+        }
+
+        public static IList<Voznja> VratiSveVoznjeObjectId()
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+            IList<Voznja> voznje = db.GetCollection<Voznja>("voznja").Find(x => true).ToList<Voznja>();
+            return voznje;
+        }
+        public static VoznjaDTO VratiVoznju(string id)
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+            Voznja v = db.GetCollection<Voznja>("voznja").Find(x => x.Id == new ObjectId(id)).FirstOrDefault();
+
+            VoznjaDTO pom = new VoznjaDTO();
+
+            if (v != null)
+            {
+
+                pom.Id = v.Id.ToString();
+                pom.PolazniGrad = v.PolazniGrad;
+                pom.DolazniGrad = v.DolazniGrad;
+                pom.DatumVoznje = v.DatumVoznje;
+                pom.BrojSedista = v.BrojSedista;
+                pom.BrojPreostalihSedista = v.BrojPreostalihSedista;
+                pom.TipVoznje = v.TipVoznje;
+
+                pom.ListaRezervacija = new List<string>();
+                foreach (var rez in v.ListaRezervacija)
+                {
+                    pom.ListaRezervacija.Add(rez.ToString());
+                }
+                //if (l.BusPreduzece.CompareTo(ObjectId.Empty) == 0)
+                //{
+                //    pom.BusPreduzece = "";
+                //}
+                // else
+                //{
+                BusPreduzece busPreduzece = db.GetCollection<BusPreduzece>("busPreduzece").Find(x => x.Id == v.BusPreduzece).FirstOrDefault();
+                    if (busPreduzece != null)
+                    {
+                        pom.BusPreduzece = busPreduzece.Id.ToString();
+                    }
+                //}
+
+            }
+            return pom;
+        }
+
+
+        public static void AzurirajVoznju(String id, VoznjaDTO voznjaDTO)
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+
+            Voznja pom = new Voznja();
+            pom.Id = new ObjectId(id);
+            pom.PolazniGrad = voznjaDTO.PolazniGrad;
+            pom.DolazniGrad = voznjaDTO.DolazniGrad;
+            pom.DatumVoznje = voznjaDTO.DatumVoznje;
+            pom.BrojSedista = voznjaDTO.BrojSedista;
+            pom.BrojPreostalihSedista = voznjaDTO.BrojPreostalihSedista;
+            pom.TipVoznje = voznjaDTO.TipVoznje;
+
+
+
+            pom.ListaRezervacija = new List<ObjectId>();
+            foreach (var rez in voznjaDTO.ListaRezervacija)
+            {
+                pom.ListaRezervacija.Add(new ObjectId(rez));
+            }
+            if (voznjaDTO.BusPreduzece.Equals(""))
+                pom.BusPreduzece = ObjectId.Empty;
+            else
+            {
+                IMongoCollection<BusPreduzece> collectionBusPreduzece = db.GetCollection<BusPreduzece>("busPreduzece");
+                BusPreduzece b = collectionBusPreduzece.Find(x => x.Id == new ObjectId(voznjaDTO.BusPreduzece)).FirstOrDefault();
+
+                if (b != null)
+                {
+
+                    if (!b.Voznje.Contains(pom.Id))
+                    {
+                        b.Voznje.Add(pom.Id);
+                        collectionBusPreduzece.ReplaceOne(x => x.Id == b.Id, b);
+
+                    }
+                    pom.BusPreduzece = new ObjectId(voznjaDTO.BusPreduzece);
+                }
+
+
+            }
+
+
+            db.GetCollection<Voznja>("voznja").ReplaceOne(x => x.Id == new ObjectId(id), pom);
+        }
+
+        public static void ObrisiVoznju(string id) 
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+
+            Voznja voznja = db.GetCollection<Voznja>("voznja").Find(x => x.Id == new ObjectId(id)).FirstOrDefault();
+
+            if (voznja.BusPreduzece != ObjectId.Empty)
+            {
+                ObrisiBusPreduzecuVoznju(voznja.Id, voznja.BusPreduzece);
+            }
+
+            db.GetCollection<Voznja>("voznja").DeleteOne(x => x.Id == new ObjectId(id));
+        }
+
+
+
         #endregion
 
         #region Komentar
