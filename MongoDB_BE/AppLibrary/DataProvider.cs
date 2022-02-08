@@ -146,15 +146,15 @@ namespace AppLibrary
             var collection = db.GetCollection<Rezervacija>("rezervacije");
         }
 
-        public static void DodajUsluge(string id, string[] rezervacije)
+        public static void DodajUsluge(string id, string[] usluge)
         {
             IMongoDatabase db = Session.MongoDatabase;
             var collection = db.GetCollection<Rezervacija>("rezervacije");
 
             IList<ObjectId> retList = new List<ObjectId>();
-            foreach (String s in rezervacije)
+            foreach (String u in usluge)
             {
-                retList.Add(new ObjectId(s));
+                retList.Add(new ObjectId(u));
             }
 
             var filter = Builders<Rezervacija>.Filter.Eq(x => x.Id, new ObjectId(id));
