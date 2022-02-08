@@ -15,6 +15,8 @@ namespace AppLibrary.Models
 
         public string DolazniGrad { get; set; }
 
+        public float CenaVoznje { get; set; }
+
         public string TipVoznje { get; set; }
 
         public DateTime DatumVoznje { get; set; }

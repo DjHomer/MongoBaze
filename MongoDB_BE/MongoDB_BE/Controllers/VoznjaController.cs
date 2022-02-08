@@ -26,6 +26,7 @@ namespace MongoDB_BE.Controllers
                 {
                     PolazniGrad = voznja.PolazniGrad,
                     DolazniGrad = voznja.DolazniGrad,
+                    CenaVoznje = voznja.CenaVoznje,
                     DatumVoznje = voznja.DatumVoznje,
                     BrojSedista = voznja.BrojSedista,
                     BrojPreostalihSedista = voznja.BrojPreostalihSedista,

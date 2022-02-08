@@ -12,6 +12,8 @@ namespace AppLibrary.Models
 
         public string Naziv { get; set; }
 
+        public string Opis { get; set; }
+
         public int GodinaOsnivanja { get; set; }
 
         public string GradPredstavnistva { get; set; }

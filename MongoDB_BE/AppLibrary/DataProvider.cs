@@ -31,6 +31,7 @@ namespace AppLibrary
                 BusPreduzeceDTO pom = new BusPreduzeceDTO();
                 pom.Id = b.Id.ToString();
                 pom.Naziv = b.Naziv;
+                pom.Opis = b.Opis;
                 pom.GodinaOsnivanja = b.GodinaOsnivanja;
                 pom.GradPredstavnistva = b.GradPredstavnistva;
 
@@ -65,6 +66,7 @@ namespace AppLibrary
                 pom.GodinaOsnivanja = b.GodinaOsnivanja;
                 pom.GradPredstavnistva = b.GradPredstavnistva;
                 pom.Naziv = b.Naziv;
+                pom.Opis = b.Opis;
                 foreach (var let in b.Voznje)
                 {
                     pom.Voznje.Add(let.ToString());
@@ -91,6 +93,7 @@ namespace AppLibrary
             if (busPreduzece != null)
             {
                 busPreduzece.Naziv = busPreduzeceDTOUpdate.Naziv;
+                busPreduzece.Opis = busPreduzeceDTOUpdate.Opis;
                 busPreduzece.GodinaOsnivanja = busPreduzeceDTOUpdate.GodinaOsnivanja;
                 busPreduzece.GradPredstavnistva = busPreduzeceDTOUpdate.GradPredstavnistva;
 
@@ -248,6 +251,7 @@ namespace AppLibrary
                 pom.Id = v.Id.ToString();
                 pom.PolazniGrad = v.PolazniGrad;
                 pom.DolazniGrad = v.DolazniGrad;
+                pom.CenaVoznje = v.CenaVoznje;
                 pom.DatumVoznje = v.DatumVoznje;
                 pom.BrojSedista = v.BrojSedista;
                 pom.BrojPreostalihSedista = v.BrojPreostalihSedista;
@@ -290,6 +294,7 @@ namespace AppLibrary
                 pom.Id = v.Id.ToString();
                 pom.PolazniGrad = v.PolazniGrad;
                 pom.DolazniGrad = v.DolazniGrad;
+                pom.CenaVoznje = v.CenaVoznje;
                 pom.DatumVoznje = v.DatumVoznje;
                 pom.BrojSedista = v.BrojSedista;
                 pom.BrojPreostalihSedista = v.BrojPreostalihSedista;
@@ -331,6 +336,7 @@ namespace AppLibrary
                 pom.Id = v.Id.ToString();
                 pom.PolazniGrad = v.PolazniGrad;
                 pom.DolazniGrad = v.DolazniGrad;
+                pom.CenaVoznje = v.CenaVoznje;
                 pom.DatumVoznje = v.DatumVoznje;
                 pom.BrojSedista = v.BrojSedista;
                 pom.BrojPreostalihSedista = v.BrojPreostalihSedista;
@@ -379,6 +385,7 @@ namespace AppLibrary
                 pom.Id = v.Id.ToString();
                 pom.PolazniGrad = v.PolazniGrad;
                 pom.DolazniGrad = v.DolazniGrad;
+                pom.CenaVoznje = v.CenaVoznje;
                 pom.DatumVoznje = v.DatumVoznje;
                 pom.BrojSedista = v.BrojSedista;
                 pom.BrojPreostalihSedista = v.BrojPreostalihSedista;
@@ -415,6 +422,7 @@ namespace AppLibrary
             pom.Id = new ObjectId(id);
             pom.PolazniGrad = voznjaDTO.PolazniGrad;
             pom.DolazniGrad = voznjaDTO.DolazniGrad;
+            pom.CenaVoznje = voznjaDTO.CenaVoznje;
             pom.DatumVoznje = voznjaDTO.DatumVoznje;
             pom.BrojSedista = voznjaDTO.BrojSedista;
             pom.BrojPreostalihSedista = voznjaDTO.BrojPreostalihSedista;
