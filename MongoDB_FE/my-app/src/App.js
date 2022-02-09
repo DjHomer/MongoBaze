@@ -1,11 +1,11 @@
 import './App.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
-import Home from './components/Home.js';
+import Home from './pages/HomeStrana/Home.js';
 import NavBar from './components/NavBar';
-import BusPreduzeca from './components/BusPreduzeca';
-import Voznje from './components/Voznje';
-import ProveriRezervaciju from './components/ProveriRezervaciju';
+import BusPreduzeca from './pages/BusPreduzeca';
+import Voznje from './pages/Voznje';
+import ProveriRezervaciju from './pages/Rezervacija/ProveriRezervaciju';
 
 
 function App() {

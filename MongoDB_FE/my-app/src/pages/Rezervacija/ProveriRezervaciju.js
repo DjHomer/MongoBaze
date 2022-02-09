@@ -3,7 +3,7 @@ import React from 'react';
 function ProveriRezervaciju(){
     return (
         <div>
-            <h1>Provera rezervacije pisi </h1>
+            <h1 className="Naslov">Provera rezervacije cao </h1>
         </div>
     )
 }

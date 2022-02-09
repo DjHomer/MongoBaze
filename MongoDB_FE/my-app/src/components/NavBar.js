@@ -1,35 +1,62 @@
 import React from 'react';
-import {Link} from "react-router-dom";
+import {Link,useHistory} from "react-router-dom";
+import {useState} from 'react';
+import './NavBar.css'
 
 function NavBar(){
+    //const history=useHistory();
+    const [click,setClick] =useState(false)
+    const [button,setButton]=useState(true)
+    
+    const handleClick=()=>setClick(!click)
+    const closeMobileMenu=()=>setClick(false)
+
+    /*const handleHistory=()=>{
+        history.push("/")
+    }*/
+
     return (
-        <div>
-            <nav class="navbar navbar-light bg-light">
-        <ul>
-          <li class="navbar-brand">
-            <Link to="/">
-                Homepage
-            </Link>
-          </li>
-          <li class="navbar-brand">
-            <Link to="/busPreduzeca">
-                Bus Preduzeca
-            </Link>
-          </li>  
-          <li class="navbar-brand">
-            <Link to="/voznje">
-                Voznje
-            </Link>
-          </li> 
-          
-          <li class="navbar-brand">
-            <Link to="/proveriRezervaciju">
-                Proveri rezervaciju
-            </Link>
-          </li>        
-        </ul>
+      
+            <nav className='navbar'>
+              <div className='navbar-container'>
+
+              <div className='menu-icon' onClick={handleClick}>
+                <i className={click ? 'fas fa-times' :'fas fa-bars'}/>
+              </div>
+           
+              <ul className={click? 'nav-menu active':'nav-menu'}>
+                
+                  <li class="nav-item">
+                    <Link to="/" className='nav-links' onClick={closeMobileMenu}>
+                        Homepage
+                    </Link>
+                  </li>
+                  <li class="nav-item">
+                    <Link to="/busPreduzeca" className='nav-links' onClick={closeMobileMenu}>
+                        Bus Preduzeca
+                    </Link>
+                  </li>  
+                  <li class="nav-item">
+                    <Link to="/voznje" className='nav-links' onClick={closeMobileMenu}>
+                        Voznje
+                    </Link>
+                  </li> 
+                  
+                  <li class="nav-item">
+                    <Link to="/proveriRezervaciju" className='nav-links' onClick={closeMobileMenu}>
+                     Rezervacija
+                    </Link>
+                  </li> 
+                  
+                   
+                </ul>
+
+              </div>
+               
       </nav>
-        </div>
+       
+     
+        
     )
 }
 
