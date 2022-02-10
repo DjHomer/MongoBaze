@@ -5,6 +5,7 @@ import Home from './pages/HomeStrana/Home.js';
 import NavBar from './components/NavBar';
 import BusPreduzeca from './pages/BusPreduzeca';
 import Voznje from './pages/Voznje/Voznje.js';
+import VoznjaDetaljniPrikaz from './pages/Voznje/VoznjaDetaljniPrikaz';
 import ProveriRezervaciju from './pages/Rezervacija/ProveriRezervaciju';
 
 
@@ -16,6 +17,7 @@ function App() {
         <Route exact path="/" element={<Home/>}/>
         <Route path="/busPreduzeca" element={<BusPreduzeca/>}/>
         <Route path="/voznje" element={<Voznje/>}/>
+        <Route exact path = "/voznje/:id" element = {<VoznjaDetaljniPrikaz/>} />
         <Route path="/proveriRezervaciju" element={<ProveriRezervaciju/>}/>
 
 

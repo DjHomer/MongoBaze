@@ -25,9 +25,6 @@ function Voznje(){
               .replace(/T/, " ")
               .replace(/\..+/, "");
 
-            
-        
-        
         element.datumVoznje = datum;
         
         
@@ -45,9 +42,9 @@ function Voznje(){
             <div className = "searchbar" className="float-child" style={{width:"60%"}}>
             <select style={{width:"100%", height:"30px"}} className="form-control" value={tipVoznje} onChange={(ev)=>setTipVoznje(ev.target.value)}>
 
-                <option key={"sve"} value={"sve"}>Sve voznje</option>
-                <option key={"gotove"} value={"gotove"}>Zavrsene</option>
-                <option key={"trenutne"} value={"trenutne"}>Voznje na raspolaganju</option>
+                <option className="slova" key={"sve"} value={"sve"}>Sve vožnje</option>
+                <option className="slova" key={"gotove"} value={"gotove"}>Završene</option>
+                <option className="slova" key={"trenutne"} value={"trenutne"}>Vožnje na raspolaganju</option>
             </select>
             </div>
         <div className = "tabele" className="float-child" style={{width:"100%"}}>
@@ -67,7 +64,7 @@ function Voznje(){
                             </tr>
                             <tr>
                                 <td>
-                                    <button className="button1" onClick={() => navigate(`/voznje/${v.id}`)}>Saznaj vise</button>
+                                    <button className="button1" onClick={() => navigate(`/voznje/${v.id}`)}>Saznaj više</button>
                                 </td>
                             </tr>
 
