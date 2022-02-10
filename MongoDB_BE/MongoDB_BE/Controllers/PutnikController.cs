@@ -28,6 +28,20 @@ namespace MongoDB_BE.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("VratiPutnika/{id}")]
+        public ActionResult VratiPutnika([FromRoute(Name = "id")] string id)
+        {
+            try
+            {
+                return new JsonResult(DataProvider.VratiPutnika(id));
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, e.ToString());
+            }
+        }
+
 
         [HttpGet]
         [Route("VratiPutnikeZaVoznju/{sifra}")]

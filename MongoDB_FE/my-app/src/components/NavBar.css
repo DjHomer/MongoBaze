@@ -1,6 +1,6 @@
 .navbar {
     
-   background:rgba(194, 7, 7, 0.568);
+   background:rgba(55, 99, 136, 0.568);
    height: 80px;
    display: flex;
    justify-content:flex-end; 
@@ -23,10 +23,12 @@
   
   .navbar-logo {
     justify-self: start;
-    margin-left: 20px;
     cursor: pointer;
     display: flex;
-    align-items: center;
+    justify-content: flex-start;
+    align-items:flex-start;
+    
+    
   }
   
   .fa-typo3 {
@@ -74,6 +76,7 @@
   
   .menu-icon {
     display: none;
+    
   }
   
   @media screen and (max-width: 960px) {
@@ -115,7 +118,8 @@
     }
   
     .navbar-logo {
-      position: absolute;
+      position:absolute;
+      margin-top: 10px;
       top: 0;
       left: 0;
       transform: translate(25%, 50%);

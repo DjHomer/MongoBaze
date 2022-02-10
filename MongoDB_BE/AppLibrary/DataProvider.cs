@@ -639,6 +639,14 @@ namespace AppLibrary
             var collection = db.GetCollection<Putnik>("putnici");
         }
 
+        public static Putnik VratiPutnika(string id)
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+            Putnik putnik = db.GetCollection<Putnik>("putnici").Find(x => x.Id == new ObjectId(id)).FirstOrDefault();
+
+            return putnik;
+        }
+
         public static List<PutnikDTO> VratiSvePutnike()
         {
             IMongoDatabase db = Session.MongoDatabase;

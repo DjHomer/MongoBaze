@@ -1,6 +1,7 @@
 import React from 'react';
 import {Link,useNavigate} from "react-router-dom";
 import {useState} from 'react';
+import logo from '../components/logoSlika.png';
 import './NavBar.css'
 
 function NavBar(){
@@ -24,6 +25,9 @@ function NavBar(){
       
             <nav className='navbar'>
               <div className='navbar-container'>
+              <Link to='/' className="navbar-logo" onClick={closeMobileMenu}>
+                  <img className='icon' src={logo} alt=""/>
+               </Link>
 
               <div className='menu-icon' onClick={handleClick}>
                 <i className={click ? 'fas fa-times' :'fas fa-bars'}/>
@@ -33,7 +37,7 @@ function NavBar(){
                 
                   <li className="nav-item">
                     <Link to="/" className='nav-links' onClick={closeMobileMenu}>
-                        Homepage
+                        Home
                     </Link>
                   </li>
                   <li className="nav-item">
@@ -49,7 +53,7 @@ function NavBar(){
                   
                   <li className="nav-item">
                     <Link to="/proveriRezervaciju" className='nav-links' onClick={closeMobileMenu}>
-                     Rezervacija
+                     Informacije o rezervaciji
                     </Link>
                   </li> 
                   

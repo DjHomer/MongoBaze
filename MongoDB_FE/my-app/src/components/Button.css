@@ -1,0 +1,51 @@
+:root {
+    --primary: rgb(71, 105, 124);
+  }
+  
+  .btn {
+    padding: 8px 20px;
+    border-radius: 2px;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    background-color: rgba(55, 99, 136, 0.568);
+  }
+  
+  .btn--primary {
+    background-color: var(--primary);
+    color: rgb(71, 105, 124);
+    
+  }
+  
+  .btn--outline {
+    background-color: rgb(71, 105, 124);
+    color:rgb(71, 105, 124);
+    height: 30px;
+    padding: 8px 20px;
+    
+    transition: all 0.3s ease-out;
+    font-size: 15px;
+  }
+  
+  .btn--medium {
+    padding: 8px 20px;
+    font-size: 15px;
+  }
+  
+  .btn--large {
+    padding: 12px 26px;
+    font-size: 20px;
+  }
+  
+  .btn--large:hover,
+  .btn--medium:hover {
+    transition: all 0.3s ease-out;
+    background: rgb(109, 160, 190);
+    color: #cbd6e2;
+    transition: 250ms;
+
+  }
+  .btn-mobile
+  {
+      margin:4px;
+  }
