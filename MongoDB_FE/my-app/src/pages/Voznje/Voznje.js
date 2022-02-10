@@ -41,7 +41,7 @@ function Voznje(){
 
 
     return (
-        <div classname ="parent" style={{textAlign:"center"}}>
+        <div className ="parent" style={{textAlign:"center"}}>
             <div className = "searchbar" className="float-child" style={{width:"60%"}}>
             <select style={{width:"100%", height:"30px"}} className="form-control" value={tipVoznje} onChange={(ev)=>setTipVoznje(ev.target.value)}>
 
@@ -50,7 +50,7 @@ function Voznje(){
                 <option key={"trenutne"} value={"trenutne"}>Voznje na raspolaganju</option>
             </select>
             </div>
-        <div classname = "tabele" className="float-child" style={{width:"100%"}}>
+        <div className = "tabele" className="float-child" style={{width:"100%"}}>
         {voznje.map(v=>
             {
                 return(

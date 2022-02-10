@@ -1,19 +1,24 @@
 import React from 'react';
-import {Link,useHistory} from "react-router-dom";
+import {Link,useNavigate} from "react-router-dom";
 import {useState} from 'react';
 import './NavBar.css'
 
 function NavBar(){
     //const history=useHistory();
+    const navigate=useNavigate();
     const [click,setClick] =useState(false)
     const [button,setButton]=useState(true)
     
     const handleClick=()=>setClick(!click)
     const closeMobileMenu=()=>setClick(false)
 
-    /*const handleHistory=()=>{
-        history.push("/")
-    }*/
+   // const handleHistory=()=>{
+       // history.push("/")
+   // }
+
+   const handleNavigate=()=>{
+     navigate.push("/")
+   }
 
     return (
       

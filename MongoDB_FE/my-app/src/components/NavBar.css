@@ -1,14 +1,13 @@
 .navbar {
     
    background:rgba(194, 7, 7, 0.568);
-    height: 80px;
-    display: flex;
-    justify-content:flex-end;
-    align-items: center;
-    font-size: 1rem;
-    position: fixed;
-    top: 0;
-    z-index: 999;
+   height: 80px;
+   display: flex;
+   justify-content:flex-end; 
+   align-items: center;
+   font-size: 1rem;
+   top: 0;
+   z-index: 999;
   
  } 
   
