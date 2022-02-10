@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './pages/HomeStrana/Home.js';
 import NavBar from './components/NavBar';
 import BusPreduzeca from './pages/BusPreduzeca';
-import Voznje from './pages/Voznje';
+import Voznje from './pages/Voznje/Voznje.js';
 import ProveriRezervaciju from './pages/Rezervacija/ProveriRezervaciju';
 
 
