@@ -26,23 +26,23 @@ function NavBar(){
            
               <ul className={click? 'nav-menu active':'nav-menu'}>
                 
-                  <li class="nav-item">
+                  <li className="nav-item">
                     <Link to="/" className='nav-links' onClick={closeMobileMenu}>
                         Homepage
                     </Link>
                   </li>
-                  <li class="nav-item">
+                  <li className="nav-item">
                     <Link to="/busPreduzeca" className='nav-links' onClick={closeMobileMenu}>
                         Bus Preduzeca
                     </Link>
                   </li>  
-                  <li class="nav-item">
+                  <li className="nav-item">
                     <Link to="/voznje" className='nav-links' onClick={closeMobileMenu}>
                         Voznje
                     </Link>
                   </li> 
                   
-                  <li class="nav-item">
+                  <li className="nav-item">
                     <Link to="/proveriRezervaciju" className='nav-links' onClick={closeMobileMenu}>
                      Rezervacija
                     </Link>

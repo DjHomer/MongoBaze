@@ -67,7 +67,7 @@ function Voznje(){
                             </tr>
                             <tr>
                                 <td>
-                                    <button class="button1" onClick={() => navigate(`/voznje/${v.id}`)}>Saznaj vise</button>
+                                    <button className="button1" onClick={() => navigate(`/voznje/${v.id}`)}>Saznaj vise</button>
                                 </td>
                             </tr>
 
