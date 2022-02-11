@@ -44,10 +44,10 @@ function VoznjaDetaljniPrikaz() {
             <div className='dugmici' style={{width:"100%"}}>
                 {v.busPreduzece!=="" && <BusPreduzeceNaziv id={v.busPreduzece}/>}
                 
-                <div class="float-child" style={{width:"250%"}}>
+                <div className="float-child" style={{width:"250%"}}>
                 {v.busPreduzece!=="" && <Link to={`/busPreduzeca/${v.busPreduzece}`} className="button1">Više o preduzeću</Link>} 
                 </div>
-                <div class="float-child" style={{width:"25%"}}>
+                <div className="float-child" style={{width:"25%"}}>
                 {moment().isBefore(v.datumVoznje) && <Link to={`/KreirajPutnika/${v.id}`} className="button1">Rezerviši</Link>} </div>    
             </div>
         </div>

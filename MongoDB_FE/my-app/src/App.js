@@ -7,6 +7,7 @@ import BusPreduzeca from './pages/BusPreduzeca';
 import Voznje from './pages/Voznje/Voznje.js';
 import VoznjaDetaljniPrikaz from './pages/Voznje/VoznjaDetaljniPrikaz';
 import ProveriRezervaciju from './pages/Rezervacija/ProveriRezervaciju';
+import KreirajPutnika from './pages/Voznje/KreirajPutnika';
 
 
 function App() {
@@ -18,7 +19,9 @@ function App() {
         <Route path="/busPreduzeca" element={<BusPreduzeca/>}/>
         <Route path="/voznje" element={<Voznje/>}/>
         <Route exact path = "/voznje/:id" element = {<VoznjaDetaljniPrikaz/>} />
+        <Route exact path = "/KreirajPutnika/:id" element = {<KreirajPutnika/>}/>
         <Route path="/proveriRezervaciju" element={<ProveriRezervaciju/>}/>
+
 
 
       </Routes>

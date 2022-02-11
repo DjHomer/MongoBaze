@@ -168,6 +168,8 @@ namespace AppLibrary
         public static ObjectId KreirajRezervaciju(Rezervacija rez)
         {
             IMongoDatabase db = Session.MongoDatabase;
+            Putnik putnik = VratiPutnika(rez.Putnik.ToString());
+            putnik.Rezervacije.Append(rez.Id);
             var collection = db.GetCollection<Rezervacija>("rezervacije");
             collection.InsertOne(rez);
 
