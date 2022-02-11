@@ -1,21 +1,19 @@
 import React from 'react';
 import Spinner from '../../components/Spinner.js'
 import  {useState} from 'react';
-import { useNavigate } from "react-router-dom";
-import Api from '../../services/Api.js'
 import { Button } from '../../components/Button'
 import  './ProveriRezervaciju.css'
-import moment from 'moment';
-import {useParams} from "react-router-dom";
+
 
 
 
 function ProveriRezervaciju(){
-    const[kodRez, setKodRez]=useState();
+    const[kodRez, setKodRez]=useState("");
     const [showSpinner,setShowSpinner]=useState(false);
     const [brSedista,setStatusSedista]=useState("");
     const [status,setStatus]=useState("");
     const [cena,setCena]=useState("");
+   
     
     
     return (
@@ -41,13 +39,21 @@ function ProveriRezervaciju(){
             </div>
             <div className="elements">
                     <h3 className="Naslovic">Status rezervacije:{status} </h3>
-                    <h3 className="Naslovic" >Broj sedista: {brSedista} </h3> 
-                    <h3 className="Naslovic" >Cena reazervacije: {cena} </h3>
+                    <h3 className="Naslovic" >Broj sedišta: {brSedista} </h3> 
+                    <h3 className="Naslovic" >Cena rezervacije: {cena} </h3>
                 
              
              </div>
              
-            
+             {(status==="na cekanju" || status==="aktivan") && <Button
+                className='btns hover-zoom'
+                buttonStyle='btn--primary'
+                buttonSize='btn--medium'
+                onClick= {()=>OtkaziRezervacijuu()}
+                
+                >
+                Otkažite rezervaciju
+                </Button>}
                
 
             
@@ -66,7 +72,7 @@ function ProveriRezervaciju(){
                     setStatusSedista(data.brSedista);
                     setCena(data.cena);
                     setShowSpinner(false);
-                    
+                   
                     
                    
                 })
@@ -78,6 +84,31 @@ function ProveriRezervaciju(){
                 setCena("Nije pronadjena rezervacija sa prosledjenim kodom!");
                 setShowSpinner(false);
             }
+        });
+
+    }
+
+    function OtkaziRezervacijuu(){
+        
+
+        fetch("https://localhost:44335/Rezervacija/ObirisRezervaciju/"+kodRez,{
+            method:"DELETE"
+        }).then(p=>{
+                if(p.ok){
+                
+                    
+                    alert("Vaša rezervacija je uspešno uklonjena!");
+                    setStatus("");
+                    setStatusSedista("");
+                    setCena("");
+                    document.body.querySelector(".inputCode").value= " ";
+                
+
+                }else{
+                    
+                    alert("Vaša rezervacija nije uspešno uklonjena!");
+                    setShowSpinner(false);
+                }
         });
 
     }
