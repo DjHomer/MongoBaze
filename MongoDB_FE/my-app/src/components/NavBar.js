@@ -40,12 +40,12 @@ function NavBar(){
                   </li>
                   <li className="nav-item">
                     <Link to="/busPreduzeca" className='nav-links' onClick={closeMobileMenu}>
-                        Bus Preduzeca
+                        Bus preduzeća
                     </Link>
                   </li>  
                   <li className="nav-item">
                     <Link to="/voznje" className='nav-links' onClick={closeMobileMenu}>
-                        Voznje
+                        Vožnje
                     </Link>
                   </li> 
                   
