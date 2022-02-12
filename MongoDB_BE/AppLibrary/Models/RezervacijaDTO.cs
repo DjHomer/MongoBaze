@@ -11,8 +11,8 @@ namespace AppLibrary.Models
     {
         public ObjectId Id { get; set; }
         public int BrSedista { get; set; }
-        public string LegitimacijaBytesBase { get; set; }
-        public string Covid19TestBytesBase { get; set; }
+        public string Legitimacija { get; set; }
+        public string Covid19Test{ get; set; }
         public string Status { get; set; }
         public string Sifra_Rezervacije { get; set; }
         public float Cena { get; set; }
@@ -21,5 +21,8 @@ namespace AppLibrary.Models
         public string Putnik { get; set; }
         public string Voznja { get; set; }
         public string Prtljag { get; set; }
+
+        public int KolicinaPrt { get; set; }
+        public bool PostojiPrt { get; set; }
     }
 }

@@ -170,8 +170,14 @@ namespace AppLibrary
             IMongoDatabase db = Session.MongoDatabase;
             Putnik putnik = VratiPutnika(rez.Putnik.ToString());
             putnik.Rezervacije.Append(rez.Id);
+
+            //DodajPrtljaguRezervaciju(rez.Prtljag, rez.Id);
             var collection = db.GetCollection<Rezervacija>("rezervacije");
             collection.InsertOne(rez);
+            DodajPrtljaguRezervaciju(rez.Prtljag, rez.Id);
+            Prtljag prtlj = VratiPrtljag(rez.Prtljag.ToString());
+            float novaCena = rez.Cena + prtlj.Kolicina * 150;
+            AzurirajCenuRezervacije(rez.Sifra_Rezervacije, novaCena);
 
             return rez.Id;
         }
@@ -199,6 +205,8 @@ namespace AppLibrary
                 Status = rez.Status,
                 Sifra_Rezervacije = rez.Sifra_Rezervacije,
                 Cena = rez.Cena,
+                Legitimacija = Convert.ToBase64String(rez.Legitimacija),
+                Covid19Test = Convert.ToBase64String(rez.Covid19Test),
                 Usluge = niz_usluga
             };
             return rezDTO;
@@ -221,6 +229,14 @@ namespace AppLibrary
             IMongoDatabase db = Session.MongoDatabase;
             var filter = Builders<Rezervacija>.Filter.Eq(x => x.Sifra_Rezervacije, sifra);
             var update = Builders<Rezervacija>.Update.Set(x => x.Status, status);
+            db.GetCollection<Rezervacija>("rezervacije").UpdateOne(filter, update);
+        }
+
+        public static void AzurirajCenuRezervacije(String sifra, float novaCena)
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+            var filter = Builders<Rezervacija>.Filter.Eq(x => x.Sifra_Rezervacije, sifra);
+            var update = Builders<Rezervacija>.Update.Set(x => x.Cena, novaCena);
             db.GetCollection<Rezervacija>("rezervacije").UpdateOne(filter, update);
         }
 
@@ -597,7 +613,35 @@ namespace AppLibrary
             var collection = db.GetCollection<Prtljag>("prtljag");
             collection.InsertOne(prtljag);
         }
-        public static void KreirajKolekcijuPrtljaga()
+
+        public static Prtljag VratiPrtljag(string id)
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+            Prtljag prtljag = db.GetCollection<Prtljag>("prtljag").Find(x => x.Id == new ObjectId(id)).FirstOrDefault();
+
+            return prtljag;
+        }
+
+        public static PrtljagDTO VratiPrtljagDTO(string id)
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+            Prtljag p = db.GetCollection<Prtljag>("prtljag").Find(x => x.Id == new ObjectId(id)).FirstOrDefault();
+
+
+            PrtljagDTO pom = new PrtljagDTO();
+
+            if (p != null)
+            {
+
+                pom.Id = p.Id.ToString();
+                pom.PostojiPrtljag = p.PostojiPrtljag;
+                pom.Kolicina = p.Kolicina;
+                pom.Rezervacija = p.Rezervacija.ToString();
+
+            }
+            return pom;
+        }
+            public static void KreirajKolekcijuPrtljaga()
         {
             IMongoDatabase db = Session.MongoDatabase;
             var collection = db.GetCollection<Prtljag>("prtljag");
@@ -625,6 +669,29 @@ namespace AppLibrary
             var update = Builders<Prtljag>.Update.Set(x => x.Kolicina, novaKol);
 
             db.GetCollection<Prtljag>("prtljag").UpdateOne(filter, update);
+
+
+        }
+
+        public static void DodajPrtljaguRezervaciju(ObjectId idPr, ObjectId idRez)
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+
+            IMongoCollection<Prtljag> prtljagCollection = db.GetCollection<Prtljag>("prtljag");
+
+
+            Prtljag prtljag = prtljagCollection.Find(a => a.Id == idPr).FirstOrDefault();
+
+            if (prtljag != null)
+            {
+                prtljag.Rezervacija = idRez;
+
+
+
+                prtljagCollection.ReplaceOne(x => x.Id == idPr, prtljag);
+            }
+
+
         }
 
         public static void ObrisiPrtljag(ObjectId prtljagId)

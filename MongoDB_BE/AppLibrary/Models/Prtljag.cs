@@ -13,5 +13,7 @@ namespace AppLibrary.Models
         public int Kolicina { get; set; }
         public bool PostojiPrtljag { get; set; }
 
+        public ObjectId Rezervacija { get; set; }
+
     }
 }

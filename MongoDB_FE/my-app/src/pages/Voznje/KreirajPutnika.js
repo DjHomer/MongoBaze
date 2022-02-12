@@ -1,14 +1,16 @@
 import React, {useState} from 'react'
 import Api from '../../services/Api.js'
 import Spinner from '../../components/Spinner.js';
+import { useNavigate } from "react-router-dom";
 import { ImagePicker,FilePicker } from 'react-file-picker'
 import {useParams} from "react-router-dom";
-//import ReactFileReader from 'react-file-reader';
+import ReactFileReader from 'react-file-reader';
 import './KreirajPutnika.css'
 
 function KreirajPutnika(){
     const {id}=useParams();
     const {data:v, loading:load1, error:err1}=Api("Voznja/VratiVoznju/"+id);
+    let navigate = useNavigate();
 
 
 
@@ -16,13 +18,17 @@ function KreirajPutnika(){
     const [passportBase64,setPassportBase64]=useState("");
     const [fullPassportBase64,setFullPassportBase64]=useState("");
     const [jmbg,setJmbg]=useState("");
+    const [email,setEmail]=useState("");
     const [ime,setIme]=useState("");
     const [prezime,setPrezime]=useState("");
-    //const [pcrTestFileName,setPcrTestFileName]=useState();
-    //const [pcrTestBase64,setPcrTestBase64]=useState("");
+    const [prtljagExists,setPrtljagExists]=useState("");
+    const [brojPrtljaga,setBrojPrtljaga]=useState(0);
+    const [pcrTestFileName,setPcrTestFileName]=useState();
+    const [pcrTestBase64,setPcrTestBase64]=useState("");
+    const [brojTelefona, setBrojTelefona]=useState("");
     const [showSpinner,setShowSpinner]=useState(false);
 
-    console.log(id);
+    //console.log(id);
 
     if(err1) throw err1;
     if(load1) return <Spinner/>;
@@ -33,14 +39,18 @@ function KreirajPutnika(){
         <div>
             <form>
                 <ul className="form-style-1">
-                    <li><label>Ime i prezime <span className="required">*</span></label><input type="text" name="field1" className="field-divided" placeholder="Ime" onChange={(event)=>setPrezime(event.currentTarget.value)} /> <input type="text" name="field2" class="field-divided" placeholder="Prezime"  onChange={(event)=>setIme(event.currentTarget.value)}/></li>
+                    <li><label>Ime i prezime <span className="required">*</span></label><input type="text" name="field1" className="field-divided" placeholder="Ime" onChange={(event)=>setIme(event.currentTarget.value)} /> <input type="text" name="field2" class="field-divided" placeholder="Prezime"  onChange={(event)=>setPrezime(event.currentTarget.value)}/></li>
                     <li>
                         <label>Email <span className="required">*</span></label>
-                        <input type="email" name="field3" className="field-long" />
+                        <input type="email" name="field3" className="field-long" onChange={(event)=>setEmail(event.currentTarget.value)} />
                     </li>
                     <li>
                         <label>JMBG <span className="required">*</span></label>
                         <input type="text" name="field4" className="field-long" onChange={(event)=>setJmbg(event.currentTarget.value)} />
+                    </li>
+                    <li>
+                        <label>Broj Telefona <span className="required">*</span></label>
+                        <input type="text" name="field7" className="field-long" onChange={(event)=>setBrojTelefona(event.currentTarget.value)} />
                     </li>
                     <li>
                         <ImagePicker
@@ -50,17 +60,49 @@ function KreirajPutnika(){
                             onChange={base64 => {setPassportBase64(base64.slice(23,base64.length));setFullPassportBase64(base64);}}
                             onError={errMsg => alert(errMsg)}
                         >
-                            <button class="btn btn-light">
+                            <button class="btn btn-light" type="button">
                                 Pronadji sliku
                             </button>
                         </ImagePicker>
                         <img src={fullPassportBase64} style={{"width":"250px","height":"250px"}}></img>
-                        {(passportBase64=="")&&<label style={{"color":"red"}}>*Obavezno polje</label>}<br/>
+                        {(passportBase64=="")&&<label style={{"color":"red"}}>*Obavezna slika</label>}<br/>
                         <br/><br/>
                     </li>
+
+                    <li>
+                    <label for="field4"><span>Imate prtljag?</span><select name="field4" class="select-field" onChange={(event)=>setPrtljagExists(event.target.value)}>
+                    <option value="" >Ne</option>
+                    <option value="true" >Da</option>
+
+                    </select ></label>
+                    </li>
+                    
+
+                    {(prtljagExists !== "") && 
+                    <li>
+
+                        <label>Broj Prtljaga <span className="required">*</span></label>
+                        <input type="number" name="field5" className="field-divided" onChange={(event)=>setBrojPrtljaga(event.currentTarget.value)}/>
+                    </li>}
+                    {(v.tipVoznje === "medjunarodni") &&
+                    <div class="float-child" style={{width:"100%"}}>
+                        <label style={{color:"#3399FF"}}>PCR test:</label>
+                            <ReactFileReader fileTypes={[".pdf",".docx"],".png",".jpg",".jpeg"} base64={true} multipleFiles={false} handleFiles={(files)=>
+                                {
+                                    setPcrTestFileName(files.fileList[0].name);
+                                    let indOfComma=files.base64.indexOf(",");
+                                    setPcrTestBase64(files.base64.slice(indOfComma+1,files.base64.length));
+                                }}>
+                               <button className='btn' class="btn btn-light" type="button">Pronadji fajl</button>
+                            </ReactFileReader> <label>{pcrTestFileName}</label>
+                          {(pcrTestBase64==="")&&<label style={{"color":"red"}}>*Obavezno polje</label>}<br/>
+                          <br/><br/>
+                    </div>
+                    }
+                    <button type="button" onClick={()=>KreirajPutnikaIRezervacijuTEST()}>safas</button>
                    
                     <li>
-                        <input type="submit" value="Rezervisi" />
+                        <input type="button" onClick={()=>KreirajPutnikaIRezervaciju()} value="Rezervisi" />
                     </li>
                    
                 </ul>
@@ -68,6 +110,75 @@ function KreirajPutnika(){
         </div>
 
     )
+    function KreirajPutnikaIRezervacijuTEST(){
+        console.log(jmbg);
+        console.log(ime);
+        console.log(prezime);
+        console.log(email);
+        console.log(prtljagExists);
+        console.log(brojPrtljaga);
+        console.log(passportBase64);
+
+    }
+
+    function KreirajPutnikaIRezervaciju() {
+        let numPrtljaga = 0
+        let prtljagPostoji = false
+        setShowSpinner(true);
+        if (prtljagExists === "true"){
+            numPrtljaga = brojPrtljaga;
+            prtljagPostoji = true
+        }
+        fetch("https://localhost:44335/Putnik/KreirajPutnika",{
+          method:"POST",
+          headers:{"Content-Type":"application/json"},
+          body: JSON.stringify({
+              "jmbg":jmbg,
+              "ime":ime,
+              "prezime":prezime,
+              "email":email,
+              "broj_Telefona":brojTelefona
+            })
+        }).then(p=>{
+            if(p.ok){
+              p.json().then(data=>{
+                console.log(data)
+                fetch("https://localhost:44335/Rezervacija/KreirajRezervaciju",{
+                  method:"POST",
+                  headers:{"Content-Type":"application/json"},
+                  body:JSON.stringify({
+                      "brSedista":Math.round(Math.random()*v.brojPreostalihSedista),
+                      "legitimacija":passportBase64,
+                      "covid19Test":pcrTestBase64,
+                      "status":"Na cekanju",
+                      "putnik":data,
+                      "voznja":id,
+                      "cena":v.cenaVoznje,
+                      "kolicinaPrt":numPrtljaga,
+                      "postojiPrt":prtljagPostoji
+                    })
+                }).then(p=>{
+                    if(p.ok)
+                    {
+                        p.json().then(data2=>{
+                            window.location.replace("/usluge/"+data2)
+                            //navigate(`/usluge/${data}`)
+                        });
+                    }
+                }).catch(exc=>{
+                  console.log("EXC"+exc);
+                })
+              });
+            }
+        }).catch(exc=>{
+          console.log(exc);
+          setShowSpinner(false);
+        })
+        setShowSpinner(false);
+
+      
+
+    }
 }
 
 export default KreirajPutnika

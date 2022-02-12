@@ -9,8 +9,7 @@ import Voznje from './pages/Voznje/Voznje.js';
 import VoznjaDetaljniPrikaz from './pages/Voznje/VoznjaDetaljniPrikaz';
 import ProveriRezervaciju from './pages/Rezervacija/ProveriRezervaciju';
 import KreirajPutnika from './pages/Voznje/KreirajPutnika';
-import Komentari from './pages/Komentari/Komentari';
-import KreirajKomentar from './pages/Komentari/KreirajKomentar';
+import Usluge from './pages/Voznje/Usluge.js'
 
 
 function App() {
@@ -25,8 +24,7 @@ function App() {
         <Route exact path = "/voznje/:id" element = {<VoznjaDetaljniPrikaz/>} />
         <Route exact path = "/KreirajPutnika/:id" element = {<KreirajPutnika/>}/>
         <Route path="/proveriRezervaciju" element={<ProveriRezervaciju/>}/>
-        <Route path="/komentari" element={<Komentari/>}/>
-        <Route exact path = "/KreirajKomentar/:id" element = {<KreirajKomentar/>}/>
+        <Route path="usluge/:idRez" element={<Usluge/>}/>
 
 
 

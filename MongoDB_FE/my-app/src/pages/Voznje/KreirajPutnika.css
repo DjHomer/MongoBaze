@@ -81,3 +81,20 @@ select{
 .form-style-1 .required{
 	color:red;
 }
+input[type=radio] {
+	display: inline;
+  }
+
+.rbovi{
+		display: flex;
+        flex-wrap: wrap;
+
+}
+.form-style-2-heading{
+	font-weight: bold;
+	font-style: italic;
+	border-bottom: 2px solid #ddd;
+	margin-bottom: 20px;
+	font-size: 15px;
+	padding-bottom: 3px;
+}

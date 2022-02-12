@@ -23,8 +23,9 @@ namespace MongoDB_BE.Controllers
             {
                 Prtljag p = new Prtljag()
                 {
-                    Kolicina= prtljag.Kolicina,
-                    PostojiPrtljag=prtljag.PostojiPrtljag
+                    Kolicina = prtljag.Kolicina,
+                    PostojiPrtljag = prtljag.PostojiPrtljag,
+                    Rezervacija = new ObjectId(prtljag.Rezervacija)
                     
                 };
                 DataProvider.KreirajPrtljag(p);
@@ -33,6 +34,20 @@ namespace MongoDB_BE.Controllers
             catch (Exception e)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, e.ToString());
+            }
+        }
+
+        [HttpGet]
+        [Route("VratiPrtljag/{id}")]
+        public ActionResult VratiBusPreduzece([FromRoute] string id)
+        {
+            try
+            {
+                return new JsonResult(DataProvider.VratiPrtljag(id));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.ToString());
             }
         }
 
@@ -49,7 +64,8 @@ namespace MongoDB_BE.Controllers
                     {
                         Id = p.Id.ToString(),
                         Kolicina=p.Kolicina,
-                        PostojiPrtljag=p.PostojiPrtljag
+                        PostojiPrtljag=p.PostojiPrtljag,
+                        Rezervacija=p.Rezervacija.ToString()
                       
                     });
                 }

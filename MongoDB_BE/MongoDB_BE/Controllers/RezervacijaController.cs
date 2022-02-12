@@ -35,23 +35,23 @@ namespace MongoDB_BE.Controllers
         {
             try
             {
-                IList<Prtljag> llist = DataProvider.VratiSavPrtljag();
+                //IList<Prtljag> llist = DataProvider.VratiSavPrtljag();
                 Prtljag prtljag = null;
-                foreach (Prtljag p in llist)
+               /* foreach (Prtljag p in llist)
                 {
                     if (p.PostojiPrtljag.CompareTo(true) == 0)
                     {
                         prtljag = p;
                         break;
                     }
-                }
+                }*/
                 if (prtljag == null)
                 {
                     prtljag = new Prtljag();
-                    prtljag.Kolicina = 100;
-                    prtljag.PostojiPrtljag = true;
+                    prtljag.Kolicina = rezervacija.KolicinaPrt;
+                    prtljag.PostojiPrtljag = rezervacija.PostojiPrt;
                     DataProvider.KreirajPrtljag(prtljag);
-                }
+                } //NAKON OVOGA JE KREIRAN PRTLJAG KOME JOS NIJE DODELJEN ID REZERVACIJE!!!
 
 
                 
@@ -59,10 +59,10 @@ namespace MongoDB_BE.Controllers
                 string pom = rnd.Next(100000, 999999).ToString();
                 Rezervacija r = new Rezervacija
                 {
-                    Id = rezervacija.Id,
+                    //Id = rezervacija.Id,
                     BrSedista = rezervacija.BrSedista,
-                    Legitimacija = Convert.FromBase64String(rezervacija.LegitimacijaBytesBase),
-                    Covid19Test = Convert.FromBase64String(rezervacija.Covid19TestBytesBase),
+                    Legitimacija = Convert.FromBase64String(rezervacija.Legitimacija),
+                    Covid19Test = Convert.FromBase64String(rezervacija.Covid19Test),
                     Status = rezervacija.Status,
                     Sifra_Rezervacije = pom, 
                     Cena = rezervacija.Cena,
@@ -70,7 +70,7 @@ namespace MongoDB_BE.Controllers
                     Putnik = new ObjectId(rezervacija.Putnik),
                     Voznja = new ObjectId(rezervacija.Voznja),
                     Prtljag = prtljag.Id
-                };
+                };              
 
                 return new JsonResult(DataProvider.KreirajRezervaciju(r).ToString());
             }

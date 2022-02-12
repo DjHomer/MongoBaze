@@ -12,11 +12,16 @@ function VoznjaDetaljniPrikaz() {
     const {id}=useParams();
 
     const {data:v, loading:load1, error:err1}=Api("Voznja/VratiVoznju/"+id);
+    const{data:putnici, loading:load2, error:err2} = Api("Rezervacija/VratiRezervacije")
 
     if(err1) throw err1;
     if(load1) return <Spinner/>;
 
+    if(err2) throw err2;
+    if(load2) return <Spinner/>;
+
     console.log(v);
+    console.log(putnici);
   
     console.log(moment().isBefore(v.datumVoznje));
     return (
@@ -35,7 +40,7 @@ function VoznjaDetaljniPrikaz() {
             <h3>Tip vožnje: {v.tipVoznje}</h3> 
             </div>
             <div className={"slova"} style={{width:"100%"}}>
-            <h3>Cena vožnje: {v.cenaVoznje}</h3> 
+            <h3>Cena vožnje: {v.cenaVoznje} din.</h3> 
             </div>
             <div>
 
