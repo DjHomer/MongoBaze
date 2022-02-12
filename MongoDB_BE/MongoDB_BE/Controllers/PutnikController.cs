@@ -41,7 +41,23 @@ namespace MongoDB_BE.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, e.ToString());
             }
         }
-
+        [HttpGet]
+        [Route("VratiPutnikaJmbg/{jmbg}")]
+        public ActionResult VratiPutnikaJmbg([FromRoute(Name = "jmbg")] string jmbg)
+        {
+            try
+            {
+                Putnik p = DataProvider.VratiPutnikaJmbg(jmbg);
+                if (p != null)
+                    return Ok(p);
+                else
+                    return NotFound();
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, e.ToString());
+            }
+        }
 
         [HttpGet]
         [Route("VratiPutnikeZaVoznju/{sifra}")]

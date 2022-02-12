@@ -730,6 +730,11 @@ namespace AppLibrary
 
             return putnik;
         }
+        public static Putnik VratiPutnikaJmbg(string jmbg)
+        {
+            IMongoDatabase db = Session.MongoDatabase;
+            return db.GetCollection<Putnik>("putnici").Find(x => x.Jmbg == jmbg).FirstOrDefault();
+        }
 
         public static List<PutnikDTO> VratiSvePutnike()
         {

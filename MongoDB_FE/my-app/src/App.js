@@ -11,7 +11,9 @@ import ProveriRezervaciju from './pages/Rezervacija/ProveriRezervaciju';
 import KreirajPutnika from './pages/Voznje/KreirajPutnika';
 import Komentari from './pages/Komentari/Komentari';
 import KreirajKomentar from './pages/Komentari/KreirajKomentar';
-import Usluge from './pages/Voznje/Usluge.js'
+import Usluge from './pages/Voznje/Usluge.js';
+import ProveriDetaljnoRezervaciju from './pages/Rezervacija/ProveriDetaljnoRezervaciju';
+import Putnik from './pages/Rezervacija/Putnik';
 
 
 function App() {
@@ -29,6 +31,8 @@ function App() {
         <Route path="/komentari" element={<Komentari/>}/>
         <Route exact path = "/KreirajKomentar/:id" element = {<KreirajKomentar/>}/>
         <Route path="usluge/:idRez" element={<Usluge/>}/>
+        <Route exact path="/ProveriDetaljnoRezervaciju/:kodRez" element={<ProveriDetaljnoRezervaciju/>}/>
+        <Route  path="/Putnik" element={<Putnik/>}/>
 
 
 

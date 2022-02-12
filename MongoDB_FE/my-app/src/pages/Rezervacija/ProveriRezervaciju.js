@@ -3,6 +3,7 @@ import Spinner from '../../components/Spinner.js'
 import  {useState} from 'react';
 import { Button } from '../../components/Button'
 import  './ProveriRezervaciju.css'
+import {useNavigate} from "react-router-dom";
 
 
 
@@ -13,8 +14,11 @@ function ProveriRezervaciju(){
     const [brSedista,setStatusSedista]=useState("");
     const [status,setStatus]=useState("");
     const [cena,setCena]=useState("");
+    const navigatePage=useNavigate();
    
-    
+    const handleNavigatePage=()=>{
+        navigatePage(`/ProveriDetaljnoRezervaciju/${kodRez}`)
+      }
     
     return (
         <div className="rezervacijaContainer">
@@ -54,6 +58,20 @@ function ProveriRezervaciju(){
                 >
                 Otkažite rezervaciju
                 </Button>}
+
+             <div className='dugmeProvera'>
+               {(status==="na cekanju" || status==="aktivan") && 
+               <Button
+                className='btns hover-zoom'
+                buttonStyle='btn--primary'
+                buttonSize='btn--medium'
+                onClick= {handleNavigatePage}
+                
+                >
+                Detaljne informacije
+                </Button>}
+
+               </div>
                
 
             
