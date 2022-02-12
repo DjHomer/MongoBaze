@@ -1,8 +1,8 @@
 import React from 'react';
 import {useParams} from "react-router-dom";
-import Spinner from '../../components/Spinner.js'
-import Api from '../../services/Api.js'
-//import Komentari from './Komentari.js';
+import Spinner from '../../components/Spinner.js';
+import Api from '../../services/Api.js';
+import Komentari from '../../pages/Komentari/Komentari.js';
 
 
 function BusPreduzece() {
@@ -47,8 +47,8 @@ function BusPreduzece() {
             </div>
         
 
-            <div>
-                <h2>Komentari</h2>
+            <div className='komentarContainer'>
+                <Komentari busPreduzece={busPreduzece.id}/>
             </div>
         
         </div>  
