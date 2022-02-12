@@ -1,230 +1,247 @@
 .busPreduzecaContainer{
-    display: flex;
-    flex-direction: column;
-    align-items:center;
-    background-image: url('bus8.jpg');
-    image-rendering: auto;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size:cover;
-    height: 100vh;
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items:center;
+  background-image: url('bus8.jpg');
+  image-rendering: auto;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size:cover;
+  height: 100vh;
+  width: 100%;
 }
 
 .preduzece{
-    background-color: #f2f2f2;
-    
-    margin-left: 40%;
-    margin-right: 40%;
-    border-radius: 4%;
-    display: flex;
-    width: 100%;
-    margin-top: 15px;
-    flex-direction: column;
-    align-items: center;
+  background-color: #f2f2f2;
+  
+  margin-left: 40%;
+  margin-right: 40%;
+  border-radius: 4%;
+  display: flex;
+  width: 100%;
+  margin-top: 15px;
+  flex-direction: column;
+  align-items: center;
 }
 
 .slova{
-    color: #154c79;
-    font-size: large;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
-      'Lucida Sans', Arial, sans-serif;
-    flex-direction: row;
-    
+  color: #154c79;
+  font-size: large;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
+    'Lucida Sans', Arial, sans-serif;
+  flex-direction: row;
+  
 }
 
 .dugmeContainer{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 20px;
-    width: 30%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+  width: 30%;
 }
 
 .dugme{
-    /*background-color: rgba(55, 99, 136, 0.568);*/   /*ista kao toolbar*/
-    color:#fff; 
-    
-    background-color: rgba(119, 125, 129, 0.568);
-    background-color:  rgba(110, 145, 173, 0.562);
-    font-size: 18px;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
-      'Lucida Sans', Arial, sans-serif;
-    /*font-weight: bold;*/
-    border:none;
-    display: inline-block;
-    padding: 10px 150px;   
-    align-items: center;
-    margin-bottom: 10px;
-    margin-top: 22px;
-    text-align: center;
-    letter-spacing: 1.5px;
-    border: 1.6px solid white;
-    width: 100%;
-    
+  
+  color:#fff; 
+  
+  background-color:  rgba(110, 145, 173, 0.562);
+  font-size: 18px;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
+    'Lucida Sans', Arial, sans-serif;
+  /*font-weight: bold;*/
+  border:none;
+  display: inline-block;
+  padding: 10px;   
+  align-items: center;
+  margin-bottom: 10px;
+  margin-top: 22px;
+  text-align: center;
+  letter-spacing: 1.5px;
+  border: 1.6px solid white;
+  width: 100%;
+  
 }
 
 .dugme:hover, dugme:focus{
-    background-color: rgb(248, 242, 242);
-    color: rgba(55, 99, 136, 0.568);
-    cursor: pointer;
-    border: none;
-    box-shadow: inset 6.5em 0 0 0 var(--hover);
-    transition: all 0.2s ease-out;
-    
+  background-color: rgb(248, 242, 242);
+  color: rgba(55, 99, 136, 0.568);
+  cursor: pointer;
+  border: none;
+  box-shadow: inset 6.5em 0 0 0 var(--hover);
+  transition: all 0.2s ease-out;
+  
 }
 
 .detaljnoContainer{
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: 100vh;
-    align-items: center;
-    background-image: url('bus8.jpg');
-    image-rendering: auto;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size:cover;
-    height: 100vh;
-    width: 100%;
-   
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+  align-items: center;
+  background-image: url('bus8.jpg');
+  image-rendering: auto;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size:cover;
+  height: 100vh;
+  width: 100%;
+ 
 }
 
 
 
 .infoContainer{
-    /*background-color: #f8f8f8;*/
-    /*background-color: rgba(107, 120, 129, 0.575);*/
-    background-color:  rgba(110, 145, 173, 0.562);   
-    display: flex;
-    flex-direction: column;    
-    border-radius: 3px;    
-    align-items: center;
-    width: 45%;
-    margin-bottom: 15px;
-    margin-top: 25px;
-    color:rgb(255, 255, 255);
-    
-    
-    
+  /*background-color: #f8f8f8;*/
+  /*background-color: rgba(107, 120, 129, 0.575);*/
+  background-color:  rgba(110, 145, 173, 0.562);   
+  display: flex;
+  flex-direction: column;    
+  border-radius: 3px;    
+  align-items: center;
+  width: 45%;
+  margin-bottom: 15px;
+  margin-top: 25px;
+  color:rgb(255, 255, 255);
+  
+  
+  
 }
 
 .sveInfo{
-    align-items: flex-start;
-    margin-right: 20px;
-    margin-left: 25px;
-    margin-bottom: 25px;
-    /*color: #154c79;*/
+  align-items: flex-start;
+  margin-right: 20px;
+  margin-left: 25px;
+  margin-bottom: 25px;
+  /*color: #154c79;*/
 }
 
 .info{
-    display: flex;
-    flex-direction: row;
-    margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+  margin-top: 10px;
 }
 
 .labela{
-    /*color: #154c79;*/ 
-    margin-right: 5px;
-    font-size: 18px;
-    font-weight: bold;
-    color: #f6f7f8;
-    
+  /*color: #154c79;*/ 
+  margin-right: 5px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #f6f7f8;
+  
 }
 
 .data{
-    color: #f6f7f8; 
-    font-size: 18px;
-    text-align:justify;
+  color: #f6f7f8; 
+  font-size: 18px;
+  text-align:justify;
 }
 
 
 
 .naziv{
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
-    'Lucida Sans', Arial, sans-serif;
-    /*color: #154c79;*/
-    color: #f6f7f8;
-    letter-spacing:0.5px;
-    align-items: center;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
+  'Lucida Sans', Arial, sans-serif;
+  /*color: #154c79;*/
+  color: #f6f7f8;
+  letter-spacing:0.5px;
+  align-items: center;
+  
 }
 
 .komentarContainer{
-    background-color: white /*rgba(110, 145, 173, 0.562)*/;   
-    display: flex;
-    flex-direction: column;    
-    border-radius: 3px;    
-    width: 45%;
-    margin-bottom: 15px;
-    margin-top: 25px;
-    color:#154c79/*rgb(255, 255, 255)*/;
-    overflow-y: auto;
+  background-color: white /*rgba(110, 145, 173, 0.562)*/;   
+  display: flex;
+  flex-direction: column;    
+  border-radius: 3px;    
+  width: 45%;
+  margin-bottom: 15px;
+  margin-top: 25px;
+  color:#154c79/*rgb(255, 255, 255)*/;
+  overflow-y: auto;
 }
 
 ::-webkit-scrollbar {
-    width: 1em;
-  }
-   
- ::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    border-radius: 3px;
-  }
-   
- ::-webkit-scrollbar-thumb {
-    background-color: darkgrey;
-    outline: 1px solid slategrey;
-    border-radius:3px;
-  }
+  width: 1em;
+}
+ 
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 3px;
+}
+ 
+::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  outline: 1px solid slategrey;
+  border-radius:3px;
+}
 
-  .komentari{
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    margin-left: 15px;
-    
-  }
+.komentari{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  
+}
 
-  .header{
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-  }
+.header{
+  display: flex;
+  flex-direction: column;
+  margin-left: 15px;
 
-  .dugmence{
-    color:#fff; 
-    background-color: rgba(119, 125, 129, 0.568);
-    background-color:  rgba(110, 145, 173, 0.562);
-    font-size: 14px;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
-      'Lucida Sans', Arial, sans-serif;
-    /*font-weight: bold;*/
-    border:none;
-    display: inline-block;
-    padding: 5px 5px;
-    align-items: center;
-    margin-bottom: 10px;
-    margin-top: 22px;
-    text-align: center;
-    letter-spacing: 1.5px;
-    border: 1.6px solid white;
-    width: 30%;
-  }
+}
 
-  .dugmence:hover{
-    background-color: rgb(248, 242, 242);
-    color: rgba(55, 99, 136, 0.568);
-    cursor: pointer;
-    border: none;
-    box-shadow: inset 6.5em 0 0 0 var(--hover);
-    transition: all 0.2s ease-out;
-    
+.dugmence{
+  color:#fff; 
+  background-color: rgba(119, 125, 129, 0.568);
+  background-color:  rgba(110, 145, 173, 0.562);
+  font-size: 14px;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
+    'Lucida Sans', Arial, sans-serif;
+  /*font-weight: bold;*/
+  border:none;
+  display: inline-block;
+  padding: 5px 5px;
+  align-items: center;
+  margin-bottom: 10px;
+  margin-top: 22px;
+  text-align: center;
+  letter-spacing: 1.5px;
+  border: 1.6px solid white;
+  width: 30%;
+
+}
+
+.dugmence:hover{
+  background-color: rgb(248, 242, 242);
+  color: rgba(55, 99, 136, 0.568);
+  cursor: pointer;
+  border: none;
+  box-shadow: inset 6.5em 0 0 0 var(--hover);
+  transition: all 0.2s ease-out;
+  
 }
 
 .komentar{
-    display: flex;
-    flex-direction: column;
-    border-top: 1px solid #154c79;
-    border-bottom: 1px solid #154c79;
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid #154c79;
+  /*border-bottom: 1px solid #154c79;*/
+  margin-left: 15px;
+  margin-right: 15px;
+
+}
+
+.prosek{
+display: flex;
+flex-direction: row;
+width: 100%;
+}
+
+.ocena{
+display: flex;
+margin-left: 60%;
+align-items: center;
+font-weight: 550;
 }
 
 

@@ -6,7 +6,7 @@ function KreirajKomentar({busPreduzece,ime, prezime, tekst, zvezdice, handleStat
 
     const [showSpinner,setShowSpinner]=useState(false);
 
-    async function onFormSubmit()
+    async function Komentarisi()
     {
        
         setShowSpinner(true);
@@ -41,7 +41,7 @@ function KreirajKomentar({busPreduzece,ime, prezime, tekst, zvezdice, handleStat
     return (
         <div>
              {showSpinner && <Spinner />}
-        <form onSubmit={()=>onFormSubmit()}>
+        <form onSubmit={()=>Komentarisi()}>
             <div>
                 <input placeholder="Ime" name="ime" value={ime} onChange={(ev)=>handleStateChange(ev)}/>
                 <input placeholder="Prezime" name="prezime" value={prezime} onChange={(ev)=>handleStateChange(ev)}/>

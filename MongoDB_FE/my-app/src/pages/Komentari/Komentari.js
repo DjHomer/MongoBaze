@@ -42,13 +42,27 @@ function Komentari({busPreduzece}) {
 
    
 
+    let prosecnaOcena = 0
+    komentari.forEach(element => { 
+        prosecnaOcena += element.zvezdice
+    });
+    
+    prosecnaOcena =  prosecnaOcena / komentari.length
+
+    if (isNaN(prosecnaOcena)) prosecnaOcena = 0
+    
+    console.log(prosecnaOcena)
+
     return (
 
 
     <div class="komentari">
-  
+        
                 <div className='header'>
+                <div className='prosek'>
                     <h3>{brKomentara}</h3>
+                    <div className='ocena'>Prosečna ocena: {prosecnaOcena.toFixed(1)}</div>
+                    </div>
                     <button className='dugmence' onClick={()=>setPrikaziKreirajKomentar(!prikaziKreirajKomentar)}>{tekstDugme}</button>
                     {!prikaziKreirajKomentar && <KreirajKomentar 
                                                 ime={ime}
