@@ -24,7 +24,7 @@ function Putnik() {
                 onClick= {()=>Proveri()}
                 
                 >
-                Unesite jmbg
+                Prikaži
                 </Button>
                 
 

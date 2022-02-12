@@ -27,7 +27,7 @@ function VoznjaDetaljniPrikaz() {
     return (
         <div className={"form"}  style={{textAlign:"left"}}>
             <div className={"naslov"}  style={{width:"100%"}}>
-            <h2>Pogledajte detaljne informacije o vožnji</h2> 
+            <h2>Ovde možete videti detaljne informacije o vožnji:</h2> 
             </div>
             <div className={"slova"} style={{width:"100%"}}>
             <h3>Polazni grad: {v.polazniGrad}</h3> </div>
