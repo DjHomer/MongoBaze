@@ -36,20 +36,20 @@ function KreirajPutnika(){
     console.log(v);
 
     return(
-        <div>
+        <div className="parent">
             <form>
                 <ul className="form-style-1">
-                    <li><label>Ime i prezime <span className="required">*</span></label><input type="text" name="field1" className="field-divided" placeholder="Ime" onChange={(event)=>setIme(event.currentTarget.value)} /> <input type="text" name="field2" class="field-divided" placeholder="Prezime"  onChange={(event)=>setPrezime(event.currentTarget.value)}/></li>
+                    <li><label style={{color:"#FFFFFF", fontFamily:"verdana"}}>Ime i prezime <span className="required">*</span></label><input type="text" name="field1" className="field-divided" placeholder="Ime" onChange={(event)=>setIme(event.currentTarget.value)} /> <input type="text" name="field2" class="field-divided" placeholder="Prezime"  onChange={(event)=>setPrezime(event.currentTarget.value)}/></li>
                     <li>
-                        <label>Email <span className="required">*</span></label>
+                        <label style={{color:"#FFFFFF", fontFamily:"verdana"}}>Email <span className="required">*</span></label>
                         <input type="email" name="field3" className="field-long" onChange={(event)=>setEmail(event.currentTarget.value)} />
                     </li>
                     <li>
-                        <label>JMBG <span className="required">*</span></label>
+                        <label style={{color:"#FFFFFF", fontFamily:"verdana"}}>JMBG <span className="required">*</span></label>
                         <input type="text" name="field4" className="field-long" onChange={(event)=>setJmbg(event.currentTarget.value)} />
                     </li>
                     <li>
-                        <label>Broj Telefona <span className="required">*</span></label>
+                        <label style={{color:"#FFFFFF", fontFamily:"verdana"}}>Broj Telefona <span className="required">*</span></label>
                         <input type="text" name="field7" className="field-long" onChange={(event)=>setBrojTelefona(event.currentTarget.value)} />
                     </li>
                     <li>
@@ -60,7 +60,7 @@ function KreirajPutnika(){
                             onChange={base64 => {setPassportBase64(base64.slice(23,base64.length));setFullPassportBase64(base64);}}
                             onError={errMsg => alert(errMsg)}
                         >
-                            <button class="btn btn-light" type="button">
+                            <button class="btn btn-light" type="button" style={{color:"#FFFFFF", fontFamily:"verdana"}}>
                                 Pronadji sliku
                             </button>
                         </ImagePicker>
@@ -70,7 +70,7 @@ function KreirajPutnika(){
                     </li>
 
                     <li>
-                    <label for="field4"><span>Imate prtljag?</span><select name="field4" class="select-field" onChange={(event)=>setPrtljagExists(event.target.value)}>
+                    <label style={{color:"#FFFFFF", fontFamily:"verdana" }} for="field4"><span>Imate prtljag?</span><select name="field4" class="select-field" onChange={(event)=>setPrtljagExists(event.target.value)}>
                     <option value="" >Ne</option>
                     <option value="true" >Da</option>
 
@@ -81,25 +81,24 @@ function KreirajPutnika(){
                     {(prtljagExists !== "") && 
                     <li>
 
-                        <label>Broj Prtljaga <span className="required">*</span></label>
+                        <label style={{color:"#FFFFFF", fontFamily:"verdana" }}>Broj Prtljaga <span className="required">*</span></label>
                         <input type="number" name="field5" className="field-divided" onChange={(event)=>setBrojPrtljaga(event.currentTarget.value)}/>
                     </li>}
                     {(v.tipVoznje === "medjunarodni") &&
                     <div class="float-child" style={{width:"100%"}}>
-                        <label style={{color:"#3399FF"}}>PCR test:</label>
+                        <label style={{color:"#FFFFFF"}}>PCR test:</label>
                             <ReactFileReader fileTypes={[".pdf",".docx"],".png",".jpg",".jpeg"} base64={true} multipleFiles={false} handleFiles={(files)=>
                                 {
                                     setPcrTestFileName(files.fileList[0].name);
                                     let indOfComma=files.base64.indexOf(",");
                                     setPcrTestBase64(files.base64.slice(indOfComma+1,files.base64.length));
                                 }}>
-                               <button className='btn' class="btn btn-light" type="button">Pronadji fajl</button>
-                            </ReactFileReader> <label>{pcrTestFileName}</label>
+                               <button className='btn' style={{backgroundColor:"#4e9af1", color:"#FFFFFF"}} type="button">Pronadji fajl</button>
+                            </ReactFileReader> <label style={{color:"#FFFFFF", fontFamily:"verdana"}}>{pcrTestFileName}</label>
                           {(pcrTestBase64==="")&&<label style={{"color":"red"}}>*Obavezno polje</label>}<br/>
                           <br/><br/>
                     </div>
                     }
-                    <button type="button" onClick={()=>KreirajPutnikaIRezervacijuTEST()}>safas</button>
                    
                     <li>
                         <input type="button" onClick={()=>KreirajPutnikaIRezervaciju()} value="Rezervisi" />
@@ -110,16 +109,6 @@ function KreirajPutnika(){
         </div>
 
     )
-    function KreirajPutnikaIRezervacijuTEST(){
-        console.log(jmbg);
-        console.log(ime);
-        console.log(prezime);
-        console.log(email);
-        console.log(prtljagExists);
-        console.log(brojPrtljaga);
-        console.log(passportBase64);
-
-    }
 
     function KreirajPutnikaIRezervaciju() {
         let numPrtljaga = 0
@@ -150,7 +139,7 @@ function KreirajPutnika(){
                       "brSedista":Math.round(Math.random()*v.brojPreostalihSedista),
                       "legitimacija":passportBase64,
                       "covid19Test":pcrTestBase64,
-                      "status":"Na cekanju",
+                      "status":"na cekanju",
                       "putnik":data,
                       "voznja":id,
                       "cena":v.cenaVoznje,

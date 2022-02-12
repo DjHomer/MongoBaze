@@ -1,0 +1,16 @@
+.float-containersila{
+	display: flex;
+	flex-direction: column;
+	background-image: url('busVoznje.jpg');
+	image-rendering: auto;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size:cover;
+	height: 100vh;
+	width: 100%;
+  }
+
+  .float-containerforma{
+      background-color: rgba(157, 190, 219, 0.3);
+      flex:row
+  }

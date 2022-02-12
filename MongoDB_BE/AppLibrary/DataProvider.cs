@@ -149,18 +149,30 @@ namespace AppLibrary
             var collection = db.GetCollection<Rezervacija>("rezervacije");
         }
 
-        public static void DodajUsluge(string id, string[] usluge)
+        public static void DodajUsluge(string idRez, string[] usluge)
         {
             IMongoDatabase db = Session.MongoDatabase;
             var collection = db.GetCollection<Rezervacija>("rezervacije");
+            Rezervacija rez = db.GetCollection<Rezervacija>("rezervacije").Find(x => x.Id == new ObjectId(idRez)).FirstOrDefault();
 
             IList<ObjectId> retList = new List<ObjectId>();
+            IList<Usluga> uslugaList = new List<Usluga>();
             foreach (String u in usluge)
             {
+                Usluga pom = db.GetCollection<Usluga>("usluge").Find(x => x.Id == new ObjectId(u)).FirstOrDefault();
+
                 retList.Add(new ObjectId(u));
+                uslugaList.Add(pom);
+            }
+            float tempCena = rez.Cena;
+            foreach(Usluga u in uslugaList)
+            {
+                tempCena += u.Cena;
             }
 
-            var filter = Builders<Rezervacija>.Filter.Eq(x => x.Id, new ObjectId(id));
+            AzurirajCenuRezervacije(rez.Sifra_Rezervacije, tempCena);
+
+            var filter = Builders<Rezervacija>.Filter.Eq(x => x.Id, new ObjectId(idRez));
             var update = Builders<Rezervacija>.Update.Set(x => x.Niz_Usluga, retList);
             collection.UpdateOne(filter, update);
         }
@@ -194,9 +206,12 @@ namespace AppLibrary
             Rezervacija rez = db.GetCollection<Rezervacija>("rezervacije").Find(x => x.Id == new ObjectId(id)).FirstOrDefault();
 
             IList<string> niz_usluga = new List<string>();
-            foreach (ObjectId idProz in rez.Niz_Usluga)
+            if (rez.Niz_Usluga != null)
             {
-                niz_usluga.Add(DataProvider.VratiUslugu(idProz.ToString()).Naziv);
+                foreach (ObjectId idProz in rez.Niz_Usluga)
+                {
+                    niz_usluga.Add(DataProvider.VratiUslugu(idProz.ToString()).Naziv);
+                }
             }
 
             RezervacijaDTO rezDTO = new RezervacijaDTO()

@@ -158,12 +158,12 @@ namespace MongoDB_BE.Controllers
         }
 
         [HttpPut]
-        [Route("DodajUsluge/{Id}")]
-        public ActionResult DodajUsluge([FromRoute(Name = "Id")] string Id, [FromBody] String[] rezervacije)
+        [Route("DodajUsluge/{IdRez}")]
+        public ActionResult DodajUsluge([FromRoute(Name = "IdRez")] string IdRez, [FromBody] String[] usluge)
         {
             try
             {
-                DataProvider.DodajUsluge(Id, rezervacije);
+                DataProvider.DodajUsluge(IdRez, usluge);
                 return Ok();
             }
             catch (Exception e)

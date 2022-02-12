@@ -1,3 +1,17 @@
+.parent{
+  display: flex;
+  flex-direction: column;
+  align-items:center;
+  background-image: url('busVoznje.jpg');
+  image-rendering: auto;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size:cover;
+  height: 100vh;
+  width: 100%;
+}
+
+
 .button1 {
     background-color: rgba(55, 99, 136, 0.568); /* Green */
     border: none;
@@ -59,7 +73,7 @@ table {
     border-top: none;
 }
   
-  tr:nth-child(even) {background-color: #f2f2f2;}
+  tr:nth-child(even) {background-color: rgba(89, 89, 106, 0.362)}
 
   td:first-child, th:first-child {
     border-left: none;
