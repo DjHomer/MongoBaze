@@ -5,11 +5,6 @@ import Api from '../../services/Api.js'
 import './BusPreduzeca.css'
 
 function BusPreduzeca(){
-   /* return (
-        <div>
-            <h1>BusPreduzeca pisi </h1>
-        </div>
-    )*/
 
     const {data:preduzeca, loading, error}=Api("BusPreduzece/VratiBusPreduzeca");
 
@@ -22,6 +17,7 @@ function BusPreduzeca(){
 
     return (
         <div className='busPreduzecaContainer'>
+             <div className='top'>Pogledajte listu svih preduzeća</div>
             <div className='dugmeContainer'>
         {preduzeca.map(p=>
             {

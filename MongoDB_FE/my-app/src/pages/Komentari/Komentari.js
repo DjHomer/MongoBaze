@@ -16,7 +16,7 @@ function Komentari({busPreduzece}) {
     if(error) throw error;
     if(loading) return <Spinner/>;
 
-    //let komentari=kom.filter(k=>k.)
+   
     console.log(komentari);
 
     const tekstDugme=prikaziKreirajKomentar===true ? "Dodaj komentar" : "Zatvori";
@@ -35,8 +35,8 @@ function Komentari({busPreduzece}) {
         setBrZvezdica(broj);
     }
 
-    const brKomentara = komentari.length > 0 ? komentari.length + " komentara" 
-                        : komentari.length === 1 ? komentari.length + " komentar" 
+    const brKomentara = komentari.length === 1 ? komentari.length + " komentar" 
+                        : komentari.length > 0 ? komentari.length + " komentara" 
                         : "Nema komentara"
     console.log(komentari.length)
 
