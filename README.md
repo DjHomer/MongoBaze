@@ -1,2 +1,2 @@
 # MongoBaze
-Treci projekat
+MongoDB, dotnet and react
